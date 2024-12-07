@@ -1,0 +1,37 @@
+/* Client.css */
+
+/* Styling for the Paper container */
+.client-paper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; /* Center horizontally */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23); /* Add a shadow */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Add padding inside the Paper */
+  }
+  
+  /* Styling for the DataGrid */
+  .client-datagrid {
+    height: auto; /* Adjust height based on content */
+    background-color: #f5f5f5; /* Light background for the grid */
+    font-size: 14px; /* Font size for grid cells */
+  }
+  
+  /* Column headers styling */
+  .client-datagrid .MuiDataGrid-columnHeaders {
+    background-color: #1976d2; /* Blue background for headers */
+    /* color: white; White text for headers */
+    font-weight: bold; /* Make column headers bold */
+  }
+  
+  /* Row styling */
+  .client-datagrid .MuiDataGrid-row {
+    height: 40px; /* Adjust row height */
+  }
+  
+  /* Footer container styling */
+  .client-datagrid .MuiDataGrid-footerContainer {
+    background-color: #1976d2; /* Blue footer background */
+    color: white; /* White text in footer */
+  }
+  
