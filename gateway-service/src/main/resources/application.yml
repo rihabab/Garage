@@ -1,0 +1,49 @@
+server:
+  port: 8085
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: clients-route
+          uri: ${ClIENTS_ROUTE_URI:http://localhost:8080}
+          predicates:
+            - Path=/clients/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, Krilya Gateway Service
+        - id: vehicles-route
+          uri: ${VEHICLES_ROUTE_URI:http://localhost:8081}
+          predicates:
+            - Path=/vehicles/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, Krilya Gateway Service
+        - id: workshops-route
+          uri: ${WORKSHOPS_ROUTE_URI:http://localhost:8082}
+          predicates:
+            - Path=/workshops/**
+          filters:
+            - PrefixPath=/api
+            - AddResponseHeader=X-Powered-By, Krilya Gateway Service
+      globalcors:
+        corsconfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true

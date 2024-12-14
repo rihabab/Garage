@@ -33,7 +33,7 @@ public class MaintenanceTaskService {
         return savedTask;
     }
 
-    public MaintenanceTask completeTask(Long id) {
+    public MaintenanceTask completeTask(Long id, double cost) {
         MaintenanceTask task = maintenanceTaskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
         task.setStatus("Completed");
@@ -45,7 +45,7 @@ public class MaintenanceTaskService {
         event.setVehicleId(savedTask.getVehicleId());
         event.setDescription(savedTask.getDescription());
         event.setStatus("Completed");
-        event.setCost(200.0); // Example cost
+        event.setCost(cost); // Example cost
         workshopEventPublisher.publishWorkshopCompletedEvent(event);
 
         return savedTask;

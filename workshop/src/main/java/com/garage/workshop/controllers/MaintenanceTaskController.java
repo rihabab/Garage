@@ -20,8 +20,8 @@ public class MaintenanceTaskController {
     }
 
     @PutMapping("/{id}/complete")
-    public MaintenanceTask completeTask(@PathVariable Long id) {
-        return maintenanceTaskService.completeTask(id);
+    public MaintenanceTask completeTask(@PathVariable Long id, @RequestParam double cost) {
+        return maintenanceTaskService.completeTask(id, cost);
     }
 
     @GetMapping
