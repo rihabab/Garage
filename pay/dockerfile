@@ -1,38 +1,21 @@
-# utilisation de l'image maven pour la construction
+# Stage 1: Build the application
 FROM maven AS build
-
-# Définitir la répertoire de travaille
-WORKDIR /app/myapp
-
-# Copie du code source dans l'image de construction
-COPY . .
-
-# Construction du projet avec Maven
-RUN mvn clean package -DskipTests
-
-# Image pour ranner le code java
-FROM openjdk:17-alpine
-
-# Définitir la répertoire de travaille
 WORKDIR /app
 
+# Copy only the pom.xml and source files needed to build
+COPY pom.xml ./
+COPY src ./src
+
+# Build the project and skip tests for faster build
+RUN mvn clean package -DskipTests
+
+# Stage 2: Create a lightweight runtime container
+FROM openjdk:17-alpine
+WORKDIR /app
 EXPOSE 8084
 
-# Copie du fichier JAR généré depuis l'étape de construction
-COPY --from=build /app/myapp/target/pay-0.0.1-SNAPSHOT*.jar pay-0.0.1-SNAPSHOT.jar
+# Copy the JAR file from the build stage
+COPY --from=build /app/target/pay-0.0.1-SNAPSHOT.jar pay-0.0.1-SNAPSHOT.jar
 
-# Commande à exécuter lors du démarrage du conteneur
-ENTRYPOINT ["java","-jar","pay-0.0.1-SNAPSHOT.jar"]
-
-# Run the application when the container launches
-
-
-# FROM openjdk:22-ea-jdk-bookworm
-
-# WORKDIR /app
-
-# COPY target/ .
-
-# EXPOSE 8080
-
-# CMD ["java", "-jar", "spring-boot-data-jpa-0.0.1-SNAPSHOT.jar", "--spring.config.location=classes/application.properties"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "pay-0.0.1-SNAPSHOT.jar"]
